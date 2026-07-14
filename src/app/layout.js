@@ -1,6 +1,7 @@
 import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import ReferralTracker from "../components/ReferralTracker";
+import LoginModal from "../components/LoginModal";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col text-slate-800 bg-white font-sans">
         <ReferralTracker />
         {children}
+        <LoginModal />
       </body>
     </html>
   );

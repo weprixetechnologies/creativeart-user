@@ -12,6 +12,18 @@ class ApiError extends Error {
 let isRefreshing = false;
 let refreshSubscribers = [];
 
+const handleAuthFailure = () => {
+  if (typeof window !== 'undefined') {
+    const pathname = window.location.pathname;
+    const isProtected = pathname.startsWith('/account') || pathname.startsWith('/checkout');
+    if (isProtected) {
+      window.location.href = '/login';
+    } else {
+      window.dispatchEvent(new Event('show-login-modal'));
+    }
+  }
+};
+
 function subscribeTokenRefresh(cb) {
   refreshSubscribers.push(cb);
 }
@@ -93,14 +105,14 @@ async function request(path, options = {}) {
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
             isRefreshing = false;
-            window.location.href = '/login';
+            handleAuthFailure();
             throw new ApiError('Session expired. Please log in again.', 'UNAUTHORIZED', 401);
           }
         } catch (refreshErr) {
           isRefreshing = false;
           localStorage.removeItem('accessToken');
           localStorage.removeItem('refreshToken');
-          window.location.href = '/login';
+          handleAuthFailure();
           throw refreshErr;
         }
       } else {
@@ -116,6 +128,10 @@ async function request(path, options = {}) {
           });
         });
       }
+    } else {
+      // No refresh token or retry failed 401
+      handleAuthFailure();
+      throw new ApiError('Please log in to continue.', 'UNAUTHORIZED', 401);
     }
   }
 

@@ -95,7 +95,7 @@ function ShopContent() {
   const handleToggleWishlist = async (productId) => {
     const token = localStorage.getItem('accessToken');
     if (!token) {
-      router.push('/login');
+      window.dispatchEvent(new Event('show-login-modal'));
       return;
     }
     try {

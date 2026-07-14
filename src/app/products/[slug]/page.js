@@ -302,7 +302,7 @@ export default function ProductDetailPage() {
     if (!product) return;
     const token = localStorage.getItem('accessToken');
     if (!token) {
-      router.push('/login');
+      window.dispatchEvent(new Event('show-login-modal'));
       return;
     }
     const valid = validateForm();
@@ -381,7 +381,7 @@ export default function ProductDetailPage() {
   const handleToggleWishlist = async () => {
     const token = localStorage.getItem('accessToken');
     if (!token) {
-      router.push('/login');
+      window.dispatchEvent(new Event('show-login-modal'));
       return;
     }
     try {
@@ -397,7 +397,7 @@ export default function ProductDetailPage() {
     e.preventDefault();
     const token = localStorage.getItem('accessToken');
     if (!token) {
-      router.push('/login');
+      window.dispatchEvent(new Event('show-login-modal'));
       return;
     }
     setReviewLoading(true);

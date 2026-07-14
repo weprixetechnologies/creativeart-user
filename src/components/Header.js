@@ -240,35 +240,6 @@ export default function Header() {
             )}
           </div>
 
-          {/* User Account / Profile */}
-          <div className="hidden md:flex items-center gap-2">
-            {user ? (
-              <>
-                <Link 
-                  href="/account" 
-                  className="p-2 text-slate-600 hover:text-primary-pink transition-colors rounded-full hover:bg-slate-50 flex items-center gap-1 cursor-pointer"
-                  title={`Profile: ${user.name}`}
-                >
-                  <User className="w-4.5 h-4.5" />
-                </Link>
-                <button 
-                  onClick={handleLogout}
-                  className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-colors rounded-full cursor-pointer"
-                  title="Log Out"
-                >
-                  <LogOut className="w-4 h-4" />
-                </button>
-              </>
-            ) : (
-              <Link 
-                href="/login" 
-                className="p-2 text-slate-600 hover:text-primary-pink transition-colors rounded-full hover:bg-slate-50"
-                title="Sign In"
-              >
-                <User className="w-4.5 h-4.5" />
-              </Link>
-            )}
-          </div>
 
           {/* Wishlist */}
           <Link 
@@ -298,19 +269,33 @@ export default function Header() {
             )}
           </Link>
 
-          {/* Mobile Menu Button */}
+          {/* Account Option (Desktop) */}
+          <div className="hidden md:flex flex-col items-start justify-center ml-2 border-l border-slate-100 pl-4">
+            {user ? (
+              <Link href="/account" className="flex flex-col hover:opacity-80 transition-opacity text-left">
+                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider leading-tight">Hi, {user.name.split(' ')[0]}</span>
+                <span className="text-xs font-bold text-slate-800 leading-tight">Visit Account</span>
+              </Link>
+            ) : (
+              <button onClick={() => window.dispatchEvent(new Event('show-login-modal'))} className="flex flex-col hover:opacity-80 transition-opacity text-left">
+                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider leading-tight">Welcome</span>
+                <span className="text-xs font-bold text-slate-800 leading-tight">Sign In / Register</span>
+              </button>
+            )}
+          </div>
+          {/* Menu Button */}
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-slate-600 hover:text-primary-pink lg:hidden focus:outline-none hover:bg-slate-50 rounded-full"
+            className="p-2 text-slate-600 hover:text-primary-pink focus:outline-none hover:bg-slate-50 rounded-full"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
-      {/* 3. Mobile Navigation Menu Drawer */}
+      {/* 3. Navigation Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-rose-100 bg-white p-4 space-y-3 flex flex-col font-sans uppercase font-bold text-xs tracking-wider z-50 animate-in slide-in-from-top-3 duration-200">
+        <div className="border-t border-rose-100 bg-white p-4 space-y-3 flex flex-col font-sans uppercase font-bold text-xs tracking-wider z-50 animate-in slide-in-from-top-3 duration-200">
           <Link 
             href="/" 
             onClick={() => setMobileMenuOpen(false)}
