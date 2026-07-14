@@ -241,32 +241,34 @@ export default function Header() {
           </div>
 
           {/* User Account / Profile */}
-          {user ? (
-            <div className="flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-2">
+            {user ? (
+              <>
+                <Link 
+                  href="/account" 
+                  className="p-2 text-slate-600 hover:text-primary-pink transition-colors rounded-full hover:bg-slate-50 flex items-center gap-1 cursor-pointer"
+                  title={`Profile: ${user.name}`}
+                >
+                  <User className="w-4.5 h-4.5" />
+                </Link>
+                <button 
+                  onClick={handleLogout}
+                  className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-colors rounded-full cursor-pointer"
+                  title="Log Out"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </>
+            ) : (
               <Link 
-                href="/account" 
-                className="p-2 text-slate-600 hover:text-primary-pink transition-colors rounded-full hover:bg-slate-50 flex items-center gap-1 cursor-pointer"
-                title={`Profile: ${user.name}`}
+                href="/login" 
+                className="p-2 text-slate-600 hover:text-primary-pink transition-colors rounded-full hover:bg-slate-50"
+                title="Sign In"
               >
                 <User className="w-4.5 h-4.5" />
               </Link>
-              <button 
-                onClick={handleLogout}
-                className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-colors rounded-full cursor-pointer"
-                title="Log Out"
-              >
-                <LogOut className="w-4 h-4" />
-              </button>
-            </div>
-          ) : (
-            <Link 
-              href="/login" 
-              className="p-2 text-slate-600 hover:text-primary-pink transition-colors rounded-full hover:bg-slate-50"
-              title="Sign In"
-            >
-              <User className="w-4.5 h-4.5" />
-            </Link>
-          )}
+            )}
+          </div>
 
           {/* Wishlist */}
           <Link 
@@ -344,6 +346,32 @@ export default function Header() {
           >
             Offers
           </Link>
+          <div className="my-2 border-t border-rose-100"></div>
+          {user ? (
+            <>
+              <Link 
+                href="/account" 
+                onClick={() => setMobileMenuOpen(false)}
+                className={`px-4 py-3 hover:bg-primary-pink-light hover:text-primary-pink rounded-xl transition-all ${pathname === '/account' ? 'bg-primary-pink-light text-primary-pink' : 'text-slate-700'}`}
+              >
+                My Account
+              </Link>
+              <button 
+                onClick={() => { setMobileMenuOpen(false); handleLogout(); }}
+                className="text-left px-4 py-3 hover:bg-rose-50 hover:text-rose-500 rounded-xl transition-all text-slate-700"
+              >
+                Log Out
+              </button>
+            </>
+          ) : (
+            <Link 
+              href="/login" 
+              onClick={() => setMobileMenuOpen(false)}
+              className={`px-4 py-3 hover:bg-primary-pink-light hover:text-primary-pink rounded-xl transition-all ${pathname === '/login' ? 'bg-primary-pink-light text-primary-pink' : 'text-slate-700'}`}
+            >
+              Sign In
+            </Link>
+          )}
         </div>
       )}
     </div>

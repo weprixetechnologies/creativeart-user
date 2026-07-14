@@ -585,90 +585,7 @@ export default function ProductDetailPage() {
               </div>
             </div>
 
-            {/* Why You'll Love It Section */}
-            <div className="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm space-y-4 text-left">
-              <h3 className="text-xs font-bold text-slate-800 uppercase tracking-widest border-b border-slate-50 pb-2">
-                Why You'll Love It
-              </h3>
-              <ul className="space-y-2.5 text-xs font-bold text-slate-500">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>Personalised with your favourite photo memories</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>Premium quality solid wood block lamp base with detailed engraving</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>Soft LED glow light, comfortable for nights and bedside placing</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>Perfect gift choice for birthdays, wedding anniversaries and special celebrations</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>USB powered cable with convenient mechanical ON/OFF switch</span>
-                </li>
-              </ul>
-            </div>
 
-            {/* Accordions */}
-            <div className="space-y-2 text-xs font-bold text-slate-500">
-              {/* Accordion 1: Details */}
-              <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
-                <button
-                  onClick={() => toggleAccordion('details')}
-                  className="w-full flex justify-between items-center p-4 text-left font-bold text-slate-800 uppercase tracking-wider cursor-pointer"
-                >
-                  <span>Product Details</span>
-                  {accordionOpen.details ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                </button>
-                {accordionOpen.details && (
-                  <div className="p-4 pt-0 border-t border-slate-50 font-medium text-slate-500 leading-relaxed text-left space-y-2">
-                    <p>Beautiful wooden table lamp block featuring customization options. A highly elegant accessory for bedrooms, bedside shelves and living rooms.</p>
-                    <ul className="list-disc pl-4 space-y-1">
-                      <li>Material: Natural Oak Wood Base, Premium Optical Acrylic Panel</li>
-                      <li>Dimensions: Acrylic - 15cm x 15cm, Wood Base - 15cm x 4.5cm x 3cm</li>
-                      <li>Cable Length: 1.2m USB cable with toggle button</li>
-                    </ul>
-                  </div>
-                )}
-              </div>
-
-              {/* Accordion 2: Shipping */}
-              <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
-                <button
-                  onClick={() => toggleAccordion('shipping')}
-                  className="w-full flex justify-between items-center p-4 text-left font-bold text-slate-800 uppercase tracking-wider cursor-pointer"
-                >
-                  <span>Shipping & Delivery</span>
-                  {accordionOpen.shipping ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                </button>
-                {accordionOpen.shipping && (
-                  <div className="p-4 pt-0 border-t border-slate-50 font-medium text-slate-500 leading-relaxed text-left">
-                    <p>All standard orders are processed and printed within 2-3 business days. Delivery is handled securely via express couriers like Delhivery, BlueDart or Shiprocket partners. Transit time is 3-5 days depending on location. Free shipping unlocks on orders exceeding ₹999.</p>
-                  </div>
-                )}
-              </div>
-
-              {/* Accordion 3: Returns */}
-              <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
-                <button
-                  onClick={() => toggleAccordion('returns')}
-                  className="w-full flex justify-between items-center p-4 text-left font-bold text-slate-800 uppercase tracking-wider cursor-pointer"
-                >
-                  <span>Returns & Refunds</span>
-                  {accordionOpen.returns ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                </button>
-                {accordionOpen.returns && (
-                  <div className="p-4 pt-0 border-t border-slate-50 font-medium text-slate-500 leading-relaxed text-left">
-                    <p>Due to the bespoke, customized nature of personalized items, returns are only accepted in cases of manufacturing defects, damages during transit, or printing mistakes. Please reach out to support with parcel unpacking videos within 48 hours of receipt for instant replacement.</p>
-                  </div>
-                )}
-              </div>
-            </div>
 
           </div>
 
@@ -1040,6 +957,90 @@ export default function ProductDetailPage() {
               </div>
             </div>
 
+            {/* Why You'll Love It Section */}
+            <div className="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm space-y-4 text-left mt-6">
+              <h3 className="text-xs font-bold text-slate-800 uppercase tracking-widest border-b border-slate-50 pb-2">
+                Why You'll Love It
+              </h3>
+              <ul className="space-y-2.5 text-xs font-bold text-slate-500">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>Personalised with your favourite photo memories</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>Premium quality solid wood block lamp base with detailed engraving</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>Soft LED glow light, comfortable for nights and bedside placing</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>Perfect gift choice for birthdays, wedding anniversaries and special celebrations</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>USB powered cable with convenient mechanical ON/OFF switch</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Accordions */}
+            <div className="space-y-2 text-xs font-bold text-slate-500 mt-6">
+              {/* Accordion 1: Details */}
+              <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
+                <button
+                  onClick={() => toggleAccordion('details')}
+                  className="w-full flex justify-between items-center p-4 text-left font-bold text-slate-800 uppercase tracking-wider cursor-pointer"
+                >
+                  <span>Product Details</span>
+                  {accordionOpen.details ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </button>
+                {accordionOpen.details && (
+                  <div className="p-4 pt-0 border-t border-slate-50 font-medium text-slate-500 leading-relaxed text-left space-y-2">
+                    <p>Beautiful wooden table lamp block featuring customization options. A highly elegant accessory for bedrooms, bedside shelves and living rooms.</p>
+                    <ul className="list-disc pl-4 space-y-1">
+                      <li>Material: Natural Oak Wood Base, Premium Optical Acrylic Panel</li>
+                      <li>Dimensions: Acrylic - 15cm x 15cm, Wood Base - 15cm x 4.5cm x 3cm</li>
+                      <li>Cable Length: 1.2m USB cable with toggle button</li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              {/* Accordion 2: Shipping */}
+              <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
+                <button
+                  onClick={() => toggleAccordion('shipping')}
+                  className="w-full flex justify-between items-center p-4 text-left font-bold text-slate-800 uppercase tracking-wider cursor-pointer"
+                >
+                  <span>Shipping & Delivery</span>
+                  {accordionOpen.shipping ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </button>
+                {accordionOpen.shipping && (
+                  <div className="p-4 pt-0 border-t border-slate-50 font-medium text-slate-500 leading-relaxed text-left">
+                    <p>All standard orders are processed and printed within 2-3 business days. Delivery is handled securely via express couriers like Delhivery, BlueDart or Shiprocket partners. Transit time is 3-5 days depending on location. Free shipping unlocks on orders exceeding ₹999.</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Accordion 3: Returns */}
+              <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
+                <button
+                  onClick={() => toggleAccordion('returns')}
+                  className="w-full flex justify-between items-center p-4 text-left font-bold text-slate-800 uppercase tracking-wider cursor-pointer"
+                >
+                  <span>Returns & Refunds</span>
+                  {accordionOpen.returns ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </button>
+                {accordionOpen.returns && (
+                  <div className="p-4 pt-0 border-t border-slate-50 font-medium text-slate-500 leading-relaxed text-left">
+                    <p>Due to the bespoke, customized nature of personalized items, returns are only accepted in cases of manufacturing defects, damages during transit, or printing mistakes. Please reach out to support with parcel unpacking videos within 48 hours of receipt for instant replacement.</p>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 

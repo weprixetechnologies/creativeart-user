@@ -40,6 +40,7 @@ function ShopContent() {
   const [sortBy, setSortBy] = useState('popularity');
   const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '');
   const [isGrid, setIsGrid] = useState(true);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
@@ -326,20 +327,37 @@ function ShopContent() {
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* LEFT: Sidebar Filters */}
-          <aside className="space-y-6">
-            <div className="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm space-y-6">
+          <>
+            {/* Mobile overlay */}
+            {mobileFiltersOpen && (
+              <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[90] lg:hidden transition-opacity" onClick={() => setMobileFiltersOpen(false)} />
+            )}
+            <aside className={`
+              fixed inset-x-0 bottom-0 z-[100] h-[85vh] overflow-y-auto bg-white p-5 rounded-t-3xl shadow-2xl transition-transform duration-300
+              ${mobileFiltersOpen ? 'translate-y-0' : 'translate-y-full'}
+              lg:relative lg:translate-y-0 lg:h-auto lg:overflow-visible lg:bg-transparent lg:p-0 lg:shadow-none lg:rounded-none lg:z-auto
+            `}>
+            <div className="bg-white lg:border border-slate-100 lg:rounded-3xl lg:p-5 lg:shadow-sm space-y-6">
               
               {/* Header & Clear Filter */}
               <div className="flex justify-between items-center border-b border-slate-50 pb-3">
                 <h3 className="text-xs font-bold text-slate-800 uppercase tracking-widest flex items-center gap-1">
                   <Filter className="w-3.5 h-3.5 text-primary-pink" /> Filters
                 </h3>
-                <button 
-                  onClick={handleClearAll}
-                  className="text-[10px] text-primary-pink hover:text-primary-pink-hover font-extrabold tracking-wider uppercase cursor-pointer"
-                >
-                  Clear All
-                </button>
+                <div className="flex items-center gap-3">
+                  <button 
+                    onClick={handleClearAll}
+                    className="text-[10px] text-primary-pink hover:text-primary-pink-hover font-extrabold tracking-wider uppercase cursor-pointer"
+                  >
+                    Clear All
+                  </button>
+                  <button 
+                    onClick={() => setMobileFiltersOpen(false)} 
+                    className="lg:hidden p-1.5 text-slate-400 hover:text-rose-500 rounded-full bg-slate-50"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
 
               {/* Categories filter */}
@@ -454,7 +472,8 @@ function ShopContent() {
               </div>
 
             </div>
-          </aside>
+            </aside>
+          </>
 
           {/* RIGHT: Product Listings Grid */}
           <div className="lg:col-span-3 space-y-6">
@@ -471,6 +490,15 @@ function ShopContent() {
               </div>
 
               <div className="flex items-center gap-4">
+                {/* Mobile Filter Toggle */}
+                <button 
+                  onClick={() => setMobileFiltersOpen(true)}
+                  className="lg:hidden flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-xl text-slate-600 hover:text-primary-pink cursor-pointer"
+                >
+                  <Filter className="w-4 h-4" />
+                  <span>Filters</span>
+                </button>
+
                 {/* Sort selector dropdown */}
                 <div className="flex items-center gap-2">
                   <span className="text-slate-400">Sort by:</span>
