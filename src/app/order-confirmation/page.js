@@ -5,17 +5,17 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import apiClient from '../../lib/api-client';
 import Header from '../../components/Header';
-import { 
-  CheckCircle2, 
-  AlertTriangle, 
-  Clock, 
-  ArrowRight, 
-  MapPin, 
-  CreditCard, 
-  Tag, 
-  ShoppingBag, 
-  Phone, 
-  User, 
+import {
+  CheckCircle2,
+  AlertTriangle,
+  Clock,
+  ArrowRight,
+  MapPin,
+  CreditCard,
+  Tag,
+  ShoppingBag,
+  Phone,
+  User,
   Download,
   Loader2
 } from 'lucide-react';
@@ -35,13 +35,13 @@ function OrderConfirmationContent() {
       const data = await apiClient.get(`/orders/${orderId}`);
       setOrder(data);
       setPollErrorCount(0);
-      
+
       // Determine if polling should continue (Prepaid & still created/pending/awaiting check)
       const primaryPayment = data.payments && data.payments[0];
       const isPrepaid = primaryPayment && primaryPayment.gateway === 'PHONEPE';
       const isPaymentPending = primaryPayment && (primaryPayment.status === 'CREATED' || primaryPayment.status === 'PENDING');
       const isOrderPlaced = data.status === 'PLACED'; // For prepaid orders, it becomes PAID on webhook success
-      
+
       if (isPrepaid && (isPaymentPending || isOrderPlaced) && data.status !== 'CANCELLED') {
         setPollingActive(true);
       } else {
@@ -108,7 +108,7 @@ function OrderConfirmationContent() {
   const isCod = primaryPayment && primaryPayment.gateway === 'COD';
   const isPrepaid = primaryPayment && primaryPayment.gateway === 'PHONEPE';
   const paymentStatus = primaryPayment ? primaryPayment.status : 'PENDING';
-  
+
   // Overall display flags
   const isSuccess = isCod || (isPrepaid && (order.status === 'PAID' || paymentStatus === 'CAPTURED'));
   const isFailed = isPrepaid && (order.status === 'CANCELLED' || paymentStatus === 'FAILED');
@@ -132,7 +132,7 @@ function OrderConfirmationContent() {
                     {isCod ? 'Order Placed!' : 'Payment Successful!'}
                   </h1>
                   <p className="text-slate-550 text-xs mt-2 max-w-md mx-auto leading-relaxed">
-                    {isCod 
+                    {isCod
                       ? `Thank you for your order. We've received your request and will ship it soon. Please keep ₹${order.totalAmount.toLocaleString('en-IN', { maximumFractionDigits: 0 })} cash ready upon delivery.`
                       : `Thank you for your payment. Your order number is ${order.orderNumber}. A confirmation mail has been sent.`}
                   </p>
@@ -269,9 +269,8 @@ function OrderConfirmationContent() {
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-slate-500 font-medium">Payment Status:</span>
-                        <span className={`font-bold uppercase ${
-                          isSuccess ? 'text-emerald-600' : isFailed ? 'text-rose-600' : 'text-amber-600'
-                        }`}>
+                        <span className={`font-bold uppercase ${isSuccess ? 'text-emerald-600' : isFailed ? 'text-rose-600' : 'text-amber-600'
+                          }`}>
                           {isSuccess ? 'Paid' : isFailed ? 'Failed' : 'Pending'}
                         </span>
                       </div>
@@ -285,7 +284,7 @@ function OrderConfirmationContent() {
             <div className="space-y-6">
               <section className="bg-white border border-slate-100 rounded-3xl p-5 sm:p-6 shadow-sm space-y-4">
                 <h2 className="font-bold text-slate-800 text-xs uppercase tracking-wider">Summary</h2>
-                
+
                 <div className="space-y-2.5 text-xs text-slate-550 font-bold">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
@@ -323,7 +322,7 @@ function OrderConfirmationContent() {
 
                   {isSuccess && (
                     <a
-                      href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api/v1'}/orders/${order.id}/invoice`}
+                      href={`${process.env.NEXT_PUBLIC_API_URL || 'https://api.thecreativeart.shop/api/v1'}/orders/${order.id}/invoice`}
                       target="_blank"
                       rel="noreferrer"
                       className="w-full flex items-center justify-center gap-2 py-3 bg-white border border-slate-100 hover:border-slate-200 text-slate-500 rounded-full font-bold text-xs transition-colors cursor-pointer"
@@ -335,8 +334,8 @@ function OrderConfirmationContent() {
               </section>
 
               <div className="text-center">
-                <Link 
-                  href="/shop" 
+                <Link
+                  href="/shop"
                   className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-400 hover:text-primary-pink transition-colors"
                 >
                   Continue Shopping <ArrowRight className="w-3.5 h-3.5" />

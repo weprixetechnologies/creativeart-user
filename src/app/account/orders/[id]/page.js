@@ -19,22 +19,22 @@ import {
 } from 'lucide-react';
 
 const STATUS_META = {
-  PLACED:                     { label: 'Placed',                  color: 'bg-blue-55/10 border-blue-100 text-blue-600' },
-  PAID:                       { label: 'Paid',                    color: 'bg-emerald-55/10 border-emerald-100 text-emerald-600' },
-  PACKED:                     { label: 'Packed',                  color: 'bg-indigo-55/10 border-indigo-100 text-indigo-600' },
-  SHIPPED:                    { label: 'Shipped',                 color: 'bg-violet-55/10 border-violet-100 text-violet-600' },
-  DELIVERED:                  { label: 'Delivered',               color: 'bg-teal-55/10 border-teal-100 text-teal-600' },
-  CANCELLED:                  { label: 'Cancelled',               color: 'bg-rose-55/10 border-rose-100 text-rose-600' },
-  REFUNDED:                   { label: 'Refunded',                color: 'bg-orange-55/10 border-orange-100 text-orange-600' },
-  BOOKED_PENDING_ADVANCE:     { label: 'Pending Advance',         color: 'bg-yellow-55/10 border-yellow-100 text-yellow-600' },
-  ADVANCE_PAID:               { label: 'Advance Paid',            color: 'bg-emerald-55/10 border-emerald-100 text-emerald-600' },
-  AWAITING_MATERIAL_DISPATCH: { label: 'Awaiting Material',       color: 'bg-blue-55/10 border-blue-100 text-blue-600' },
-  MATERIAL_IN_TRANSIT:        { label: 'Material In Transit',     color: 'bg-violet-55/10 border-violet-100 text-violet-600' },
-  MATERIAL_RECEIVED:          { label: 'Material Received',       color: 'bg-teal-55/10 border-teal-100 text-teal-600' },
-  IN_PRODUCTION:              { label: 'In Production',           color: 'bg-indigo-55/10 border-indigo-100 text-indigo-600' },
-  READY_PENDING_FINAL_PAYMENT:{ label: 'Ready for Balance',       color: 'bg-amber-55/10 border-amber-100 text-amber-600' },
-  FINAL_PAID:                 { label: 'Final Paid',              color: 'bg-emerald-55/10 border-emerald-100 text-emerald-600' },
-  ON_HOLD:                    { label: 'On Hold',                 color: 'bg-slate-50 border-slate-100 text-slate-500' },
+  PLACED: { label: 'Placed', color: 'bg-blue-55/10 border-blue-100 text-blue-600' },
+  PAID: { label: 'Paid', color: 'bg-emerald-55/10 border-emerald-100 text-emerald-600' },
+  PACKED: { label: 'Packed', color: 'bg-indigo-55/10 border-indigo-100 text-indigo-600' },
+  SHIPPED: { label: 'Shipped', color: 'bg-violet-55/10 border-violet-100 text-violet-600' },
+  DELIVERED: { label: 'Delivered', color: 'bg-teal-55/10 border-teal-100 text-teal-600' },
+  CANCELLED: { label: 'Cancelled', color: 'bg-rose-55/10 border-rose-100 text-rose-600' },
+  REFUNDED: { label: 'Refunded', color: 'bg-orange-55/10 border-orange-100 text-orange-600' },
+  BOOKED_PENDING_ADVANCE: { label: 'Pending Advance', color: 'bg-yellow-55/10 border-yellow-100 text-yellow-600' },
+  ADVANCE_PAID: { label: 'Advance Paid', color: 'bg-emerald-55/10 border-emerald-100 text-emerald-600' },
+  AWAITING_MATERIAL_DISPATCH: { label: 'Awaiting Material', color: 'bg-blue-55/10 border-blue-100 text-blue-600' },
+  MATERIAL_IN_TRANSIT: { label: 'Material In Transit', color: 'bg-violet-55/10 border-violet-100 text-violet-600' },
+  MATERIAL_RECEIVED: { label: 'Material Received', color: 'bg-teal-55/10 border-teal-100 text-teal-600' },
+  IN_PRODUCTION: { label: 'In Production', color: 'bg-indigo-55/10 border-indigo-100 text-indigo-600' },
+  READY_PENDING_FINAL_PAYMENT: { label: 'Ready for Balance', color: 'bg-amber-55/10 border-amber-100 text-amber-600' },
+  FINAL_PAID: { label: 'Final Paid', color: 'bg-emerald-55/10 border-emerald-100 text-emerald-600' },
+  ON_HOLD: { label: 'On Hold', color: 'bg-slate-50 border-slate-100 text-slate-500' },
 };
 
 const STEPPER_STAGES = [
@@ -214,7 +214,7 @@ export default function UserOrderDetailPage() {
           </div>
         </div>
         <a
-          href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api/v1'}/orders/${orderId}/invoice`}
+          href={`${process.env.NEXT_PUBLIC_API_URL || 'https://api.thecreativeart.shop/api/v1'}/orders/${orderId}/invoice`}
           target="_blank"
           rel="noreferrer"
           className="ml-auto flex items-center gap-1.5 px-4.5 py-2 bg-slate-100 hover:bg-[#fff0f3] hover:text-[#e04169] text-slate-600 rounded-full text-xs font-bold transition-all border border-slate-200/50"
@@ -233,11 +233,10 @@ export default function UserOrderDetailPage() {
               const isActive = idx === currentStageIndex;
               return (
                 <div key={idx} className="flex-1 flex flex-row sm:flex-col items-center gap-3 text-left sm:text-center">
-                  <div className={`w-8 h-8 rounded-full border flex items-center justify-center font-bold text-xs shrink-0 transition-all ${
-                    isCompleted
+                  <div className={`w-8 h-8 rounded-full border flex items-center justify-center font-bold text-xs shrink-0 transition-all ${isCompleted
                       ? 'bg-[#e04169] border-[#e04169] text-white shadow-sm shadow-rose-600/10'
                       : 'border-slate-200 bg-white text-slate-400'
-                  } ${isActive ? 'animate-pulse ring-2 ring-[#fff0f3]' : ''}`}>
+                    } ${isActive ? 'animate-pulse ring-2 ring-[#fff0f3]' : ''}`}>
                     {idx + 1}
                   </div>
                   <div>
@@ -404,9 +403,8 @@ export default function UserOrderDetailPage() {
           { label: 'Tax', val: order.taxAmount },
           { label: 'Total Project Cost', val: order.totalAmount, highlight: true },
         ].map(({ label, val, highlight }) => (
-          <div key={label} className={`bg-white border rounded-3xl p-4 shadow-sm flex flex-col justify-between ${
-            highlight ? 'border-[#fecdd3] ring-2 ring-[#fff0f3] bg-[#fff0f3]/25 font-bold' : 'border-slate-100'
-          }`}>
+          <div key={label} className={`bg-white border rounded-3xl p-4 shadow-sm flex flex-col justify-between ${highlight ? 'border-[#fecdd3] ring-2 ring-[#fff0f3] bg-[#fff0f3]/25 font-bold' : 'border-slate-100'
+            }`}>
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wide mb-1">{label}</p>
             <p className={`text-sm font-black ${highlight ? 'text-[#e04169]' : 'text-slate-850'}`}>
               ₹{parseFloat(val || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
@@ -430,11 +428,10 @@ export default function UserOrderDetailPage() {
                   ₹{parseFloat(order.advanceAmount || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                 </p>
               </div>
-              <span className={`text-[9px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider ${
-                order.payments?.some(p => p.paymentType === 'ADVANCE' && p.status === 'CAPTURED')
+              <span className={`text-[9px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider ${order.payments?.some(p => p.paymentType === 'ADVANCE' && p.status === 'CAPTURED')
                   ? 'bg-emerald-55/10 text-emerald-600 border border-emerald-100'
                   : 'bg-yellow-55/10 text-yellow-600 border border-yellow-100'
-              }`}>
+                }`}>
                 {order.payments?.some(p => p.paymentType === 'ADVANCE' && p.status === 'CAPTURED') ? 'Paid' : 'Pending'}
               </span>
             </div>
@@ -447,11 +444,10 @@ export default function UserOrderDetailPage() {
                   ₹{parseFloat(order.finalAmount || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                 </p>
               </div>
-              <span className={`text-[9px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider ${
-                order.payments?.some(p => p.paymentType === 'FINAL' && p.status === 'CAPTURED')
+              <span className={`text-[9px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider ${order.payments?.some(p => p.paymentType === 'FINAL' && p.status === 'CAPTURED')
                   ? 'bg-emerald-55/10 text-emerald-600 border border-emerald-100'
                   : 'bg-yellow-55/10 text-yellow-600 border border-yellow-100'
-              }`}>
+                }`}>
                 {order.payments?.some(p => p.paymentType === 'FINAL' && p.status === 'CAPTURED') ? 'Paid' : 'Pending'}
               </span>
             </div>
@@ -506,9 +502,8 @@ export default function UserOrderDetailPage() {
               <div>
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-extrabold text-slate-800 uppercase tracking-wide">{pay.paymentType}</span>
-                  <span className={`text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider ${
-                    pay.status === 'CAPTURED' ? 'bg-emerald-55/10 text-emerald-600 border border-emerald-100' : 'bg-slate-50 border-slate-100 text-slate-400'
-                  }`}>{pay.status}</span>
+                  <span className={`text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider ${pay.status === 'CAPTURED' ? 'bg-emerald-55/10 text-emerald-600 border border-emerald-100' : 'bg-slate-50 border-slate-100 text-slate-400'
+                    }`}>{pay.status}</span>
                 </div>
               </div>
               <p className="font-black text-slate-800 text-sm">

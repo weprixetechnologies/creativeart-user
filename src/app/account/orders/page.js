@@ -3,16 +3,16 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import apiClient from '../../../lib/api-client';
-import { 
-  Package, 
-  Search, 
-  ChevronDown, 
-  Clock, 
-  ShieldCheck, 
-  Truck, 
-  ExternalLink, 
-  ArrowRight, 
-  ShoppingBag, 
+import {
+  Package,
+  Search,
+  ChevronDown,
+  Clock,
+  ShieldCheck,
+  Truck,
+  ExternalLink,
+  ArrowRight,
+  ShoppingBag,
   Loader,
   AlertCircle,
   FileText,
@@ -21,22 +21,22 @@ import {
 } from 'lucide-react';
 
 const STATUS_META = {
-  PLACED:                     { label: 'Placed',                  color: 'bg-blue-50 text-blue-600 border-blue-100' },
-  PAID:                       { label: 'Paid',                    color: 'bg-emerald-50 text-emerald-600 border-emerald-100' },
-  PACKED:                     { label: 'Packed',                  color: 'bg-indigo-50 text-indigo-600 border-indigo-100' },
-  SHIPPED:                    { label: 'Shipped',                 color: 'bg-violet-50 text-violet-650 border-violet-100' },
-  DELIVERED:                  { label: 'Delivered',               color: 'bg-teal-50 text-teal-600 border-teal-100' },
-  CANCELLED:                  { label: 'Cancelled',               color: 'bg-rose-50 text-rose-600 border-rose-100' },
-  REFUNDED:                   { label: 'Refunded',                color: 'bg-orange-50 text-orange-650 border-orange-100' },
-  BOOKED_PENDING_ADVANCE:     { label: 'Pending Advance',         color: 'bg-yellow-50 text-yellow-600 border-yellow-100' },
-  ADVANCE_PAID:               { label: 'Advance Paid',            color: 'bg-emerald-50 text-emerald-600 border-emerald-100' },
-  AWAITING_MATERIAL_DISPATCH: { label: 'Awaiting Material',       color: 'bg-blue-50 text-blue-600 border-blue-100' },
-  MATERIAL_IN_TRANSIT:        { label: 'Material In Transit',     color: 'bg-violet-50 text-violet-600 border-violet-100' },
-  MATERIAL_RECEIVED:          { label: 'Material Received',       color: 'bg-teal-50 text-teal-600 border-teal-100' },
-  IN_PRODUCTION:              { label: 'In Production',           color: 'bg-indigo-50 text-indigo-600 border-indigo-100' },
-  READY_PENDING_FINAL_PAYMENT:{ label: 'Ready for Balance',       color: 'bg-amber-50 text-amber-600 border-amber-100' },
-  FINAL_PAID:                 { label: 'Final Paid',              color: 'bg-emerald-50 text-emerald-600 border-emerald-100' },
-  ON_HOLD:                    { label: 'On Hold',                 color: 'bg-slate-50 text-slate-500 border-slate-100' },
+  PLACED: { label: 'Placed', color: 'bg-blue-50 text-blue-600 border-blue-100' },
+  PAID: { label: 'Paid', color: 'bg-emerald-50 text-emerald-600 border-emerald-100' },
+  PACKED: { label: 'Packed', color: 'bg-indigo-50 text-indigo-600 border-indigo-100' },
+  SHIPPED: { label: 'Shipped', color: 'bg-violet-50 text-violet-650 border-violet-100' },
+  DELIVERED: { label: 'Delivered', color: 'bg-teal-50 text-teal-600 border-teal-100' },
+  CANCELLED: { label: 'Cancelled', color: 'bg-rose-50 text-rose-600 border-rose-100' },
+  REFUNDED: { label: 'Refunded', color: 'bg-orange-50 text-orange-650 border-orange-100' },
+  BOOKED_PENDING_ADVANCE: { label: 'Pending Advance', color: 'bg-yellow-50 text-yellow-600 border-yellow-100' },
+  ADVANCE_PAID: { label: 'Advance Paid', color: 'bg-emerald-50 text-emerald-600 border-emerald-100' },
+  AWAITING_MATERIAL_DISPATCH: { label: 'Awaiting Material', color: 'bg-blue-50 text-blue-600 border-blue-100' },
+  MATERIAL_IN_TRANSIT: { label: 'Material In Transit', color: 'bg-violet-50 text-violet-600 border-violet-100' },
+  MATERIAL_RECEIVED: { label: 'Material Received', color: 'bg-teal-50 text-teal-600 border-teal-100' },
+  IN_PRODUCTION: { label: 'In Production', color: 'bg-indigo-50 text-indigo-600 border-indigo-100' },
+  READY_PENDING_FINAL_PAYMENT: { label: 'Ready for Balance', color: 'bg-amber-50 text-amber-600 border-amber-100' },
+  FINAL_PAID: { label: 'Final Paid', color: 'bg-emerald-50 text-emerald-600 border-emerald-100' },
+  ON_HOLD: { label: 'On Hold', color: 'bg-slate-50 text-slate-500 border-slate-100' },
 };
 
 export default function MyOrdersPage() {
@@ -121,7 +121,7 @@ export default function MyOrdersPage() {
   // Stepper timeline helper
   const renderHorizontalStepper = (order) => {
     const isCustom = order.orderType === 'DUAL_PAYMENT';
-    
+
     let stages = [];
     let currentIdx = 0;
 
@@ -163,8 +163,8 @@ export default function MyOrdersPage() {
         {/* Stepper bar */}
         <div className="relative flex items-center justify-between w-full pt-1.5">
           <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-1 bg-slate-100 rounded z-0" />
-          <div 
-            className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-[#e04169] rounded transition-all duration-500 z-0" 
+          <div
+            className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-[#e04169] rounded transition-all duration-500 z-0"
             style={{ width: `${stages.length > 1 ? (Math.max(0, currentIdx) / (stages.length - 1)) * 100 : 0}%` }}
           />
           {stages.map((stage, idx) => {
@@ -172,11 +172,10 @@ export default function MyOrdersPage() {
             const isActive = idx === currentIdx;
             return (
               <div key={stage} className="relative z-10 flex flex-col items-center">
-                <div className={`w-3.5 h-3.5 rounded-full border-2 transition-all ${
-                  isCompleted 
-                    ? 'bg-[#e04169] border-[#e04169] ring-2 ring-rose-100' 
+                <div className={`w-3.5 h-3.5 rounded-full border-2 transition-all ${isCompleted
+                    ? 'bg-[#e04169] border-[#e04169] ring-2 ring-rose-100'
                     : 'bg-white border-slate-200'
-                } ${isActive ? 'scale-110' : ''}`} />
+                  } ${isActive ? 'scale-110' : ''}`} />
                 <span className={`text-[8px] sm:text-[9px] font-bold uppercase tracking-wider mt-2.5 ${isCompleted ? 'text-slate-800' : 'text-slate-400'}`}>
                   {stage}
                 </span>
@@ -191,10 +190,10 @@ export default function MyOrdersPage() {
             Expected Delivery: {order.createdAt ? new Date(new Date(order.createdAt).getTime() + 6 * 24 * 60 * 60 * 1000).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) : 'N/A'}
           </span>
           {order.status === 'SHIPPED' && (
-            <a 
-              href="https://track.shiprocket.in/" 
-              target="_blank" 
-              rel="noreferrer" 
+            <a
+              href="https://track.shiprocket.in/"
+              target="_blank"
+              rel="noreferrer"
               className="text-[#e04169] hover:underline flex items-center gap-1 font-extrabold"
             >
               Live Tracking <ExternalLink className="w-3 h-3" />
@@ -207,14 +206,14 @@ export default function MyOrdersPage() {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-200">
-      
+
       {/* Header and Title Section */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-rose-100 pb-4">
         <div>
           <h1 className="text-xl sm:text-2xl font-playfair font-black text-slate-800">Order History</h1>
           <p className="text-xs text-slate-450 mt-1 font-semibold">Track, manage and view all your orders in one place.</p>
         </div>
-        
+
         {/* Search and Sort Row */}
         <div className="flex flex-wrap items-center gap-3">
           <div className="relative">
@@ -227,7 +226,7 @@ export default function MyOrdersPage() {
               className="pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200/80 rounded-full text-xs font-bold text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#e04169] transition-all min-w-[220px]"
             />
           </div>
-          
+
           <div className="relative">
             <select
               value={sortBy}
@@ -247,7 +246,7 @@ export default function MyOrdersPage() {
       {/* KPI Cards Row */}
       {orders.length > 0 && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          
+
           {/* Card 1: Total Orders */}
           <div className="bg-white border border-slate-100 rounded-3xl p-4.5 flex items-center gap-3.5 shadow-sm">
             <div className="w-10 h-10 rounded-full bg-[#fff0f3] flex items-center justify-center text-[#e04169] border border-rose-100 shrink-0">
@@ -308,11 +307,10 @@ export default function MyOrdersPage() {
           <button
             key={filter.key}
             onClick={() => setActiveFilter(filter.key)}
-            className={`px-4.5 py-2.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all whitespace-nowrap border cursor-pointer ${
-              activeFilter === filter.key
+            className={`px-4.5 py-2.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all whitespace-nowrap border cursor-pointer ${activeFilter === filter.key
                 ? 'bg-[#e04169] text-white border-[#e04169] shadow-sm shadow-rose-600/10 scale-[1.01]'
                 : 'bg-white text-slate-500 border-slate-100 hover:border-rose-100 hover:text-[#e04169]'
-            }`}
+              }`}
           >
             {filter.label}
           </button>
@@ -345,10 +343,10 @@ export default function MyOrdersPage() {
           {filteredAndSortedOrders.map(order => {
             const isDual = order.orderType === 'DUAL_PAYMENT';
             const firstItem = order.items?.[0] || {};
-            
+
             // Extract custom choices image or defaults
             const itemImg = firstItem.productImage || 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=300&auto=format&fit=crop';
-            
+
             // Find Recipient details or custom choice names
             let recipient = '';
             if (firstItem.customFieldValues) {
@@ -367,21 +365,20 @@ export default function MyOrdersPage() {
                 key={order.id}
                 className="bg-white border border-slate-100 rounded-3xl p-5 hover:shadow-md hover:border-rose-100 transition-all duration-300 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center"
               >
-                
+
                 {/* Column 1: Image & Details */}
                 <div className="lg:col-span-4 flex items-center gap-4 min-w-0">
                   <div className="w-24 h-24 sm:w-26 sm:h-26 bg-[#fafbfc] rounded-2xl overflow-hidden border border-slate-100 shrink-0 relative">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={itemImg} alt={firstItem.productNameSnapshot || 'Product'} className="w-full h-full object-cover" />
                   </div>
-                  
+
                   <div className="space-y-1.5 min-w-0">
                     <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className={`text-[8px] font-black px-2 py-0.5 rounded border uppercase tracking-wider leading-none ${
-                        isDual
+                      <span className={`text-[8px] font-black px-2 py-0.5 rounded border uppercase tracking-wider leading-none ${isDual
                           ? 'bg-rose-50 border-rose-100 text-[#e04169]'
                           : 'bg-slate-50 border-slate-200/60 text-slate-505'
-                      }`}>
+                        }`}>
                         {isDual ? 'Custom Project' : 'Standard'}
                       </span>
                     </div>
@@ -389,7 +386,7 @@ export default function MyOrdersPage() {
                     <h3 className="font-extrabold text-slate-805 text-sm sm:text-base leading-tight truncate">
                       {firstItem.productNameSnapshot || 'Floral Preservation Order'}
                     </h3>
-                    
+
                     <p className="text-[10px] text-slate-450 font-bold truncate">
                       {recipient}
                     </p>
@@ -412,7 +409,7 @@ export default function MyOrdersPage() {
                     <p className="text-base sm:text-lg font-black text-slate-850">
                       ₹{parseFloat(order.totalAmount || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                     </p>
-                    
+
                     {/* Amount breakdown logs */}
                     <div className="text-[9.5px] font-bold text-slate-455 space-y-0.5">
                       {isDual ? (
@@ -447,7 +444,7 @@ export default function MyOrdersPage() {
                         <Truck className="w-3.5 h-3.5" /> Track Order
                       </a>
                     )}
-                    
+
                     {order.status === 'READY_PENDING_FINAL_PAYMENT' && (
                       <Link
                         href={`/account/orders/${order.id}`}
@@ -465,7 +462,7 @@ export default function MyOrdersPage() {
                     </Link>
 
                     <a
-                      href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api/v1'}/orders/${order.id}/invoice`}
+                      href={`${process.env.NEXT_PUBLIC_API_URL || 'https://api.thecreativeart.shop/api/v1'}/orders/${order.id}/invoice`}
                       target="_blank"
                       rel="noreferrer"
                       className="p-2.5 bg-white border border-slate-200 text-slate-500 hover:bg-[#fff0f3] hover:text-[#e04169] hover:border-rose-100 rounded-full transition-all flex items-center justify-center"

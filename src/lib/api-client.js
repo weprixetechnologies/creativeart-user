@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api/v1';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.thecreativeart.shop/api/v1';
 
 class ApiError extends Error {
   constructor(message, code, status) {
@@ -23,7 +23,7 @@ function onRefreshed(token) {
 
 async function request(path, options = {}) {
   const url = `${API_BASE_URL}${path}`;
-  
+
   // Get stored tokens
   const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
 
@@ -72,7 +72,7 @@ async function request(path, options = {}) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ refreshToken })
           });
- 
+
           const refreshData = await refreshResponse.json();
           if (refreshData.success && refreshData.data.accessToken) {
             const nextToken = refreshData.data.accessToken;
@@ -80,7 +80,7 @@ async function request(path, options = {}) {
             localStorage.setItem('refreshToken', refreshData.data.refreshToken);
             isRefreshing = false;
             onRefreshed(nextToken);
-            
+
             // Retry the current request that initiated the refresh
             options.headers = {
               ...options.headers,

@@ -5,10 +5,10 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import apiClient from '../../../lib/api-client';
 import Header from '../../../components/Header';
-import { 
-  Loader, 
-  AlertTriangle, 
-  ShoppingBag, 
+import {
+  Loader,
+  AlertTriangle,
+  ShoppingBag,
   CheckCircle,
   Truck,
   Sparkles,
@@ -52,7 +52,7 @@ export default function ProductDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  
+
   // Gallery State
   const [activeImage, setActiveImage] = useState('');
 
@@ -96,8 +96,8 @@ export default function ProductDetailPage() {
       setProduct(data);
 
       // Set default image
-      const primary = data.images?.find(img => img.is_primary === 1)?.url 
-        || data.images?.[0]?.url 
+      const primary = data.images?.find(img => img.is_primary === 1)?.url
+        || data.images?.[0]?.url
         || 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=400&auto=format&fit=crop';
       setActiveImage(primary);
 
@@ -105,7 +105,7 @@ export default function ProductDetailPage() {
       if (data.item_type === 'PRODUCT' && data.product_type === 'VARIABLE' && data.variants?.length > 0) {
         const firstActive = data.variants.find(v => v.status === 'ACTIVE') || data.variants[0];
         setSelectedVariant(firstActive);
-        
+
         const attrs = typeof firstActive.attributes === 'string' ? JSON.parse(firstActive.attributes) : firstActive.attributes;
         setSelectedAttrs(attrs);
       }
@@ -123,9 +123,9 @@ export default function ProductDetailPage() {
       try {
         const revRes = await apiClient.get(`/products/${data.id}/reviews`);
         setReviews(revRes.reviews || []);
-        setRatingStats({ 
-          totalReviews: revRes.totalReviews || revRes.reviews?.length || 0, 
-          averageRating: String(revRes.averageRating || '0.0') 
+        setRatingStats({
+          totalReviews: revRes.totalReviews || revRes.reviews?.length || 0,
+          averageRating: String(revRes.averageRating || '0.0')
         });
       } catch (revErr) {
         console.error('Failed to load reviews:', revErr);
@@ -161,7 +161,7 @@ export default function ProductDetailPage() {
 
   const handleAttrSelect = (key, val) => {
     if (!product) return;
-    
+
     const updated = { ...selectedAttrs, [key]: val };
     setSelectedAttrs(updated);
 
@@ -197,7 +197,7 @@ export default function ProductDetailPage() {
       const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
       const uploadKey = `custom-uploads/${fileName}`;
 
-      const appUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api/v1';
+      const appUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.thecreativeart.shop/api/v1';
       const proxyUrl = `${appUrl}/storage/upload?key=${encodeURIComponent(uploadKey)}&contentType=${encodeURIComponent(file.type)}`;
 
       const uploadRes = await fetch(proxyUrl, {
@@ -472,8 +472,8 @@ export default function ProductDetailPage() {
     baseDisplayPrice = parseFloat(selectedVariant.price_override || product.base_price);
   }
 
-  const originalPrice = isProject 
-    ? Math.round(parseFloat(product.total_amount) * 1.7) 
+  const originalPrice = isProject
+    ? Math.round(parseFloat(product.total_amount) * 1.7)
     : Math.round(baseDisplayPrice * 1.7);
   const discountPct = 43; // Static visual discount percentage matching product detail.png
 
@@ -515,10 +515,10 @@ export default function ProductDetailPage() {
 
         {/* Main Product Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
+
           {/* LEFT: Gallery, Why Love It & Accordions (Span 5) */}
           <div className="lg:col-span-5 space-y-6">
-            
+
             {/* Display Image Card */}
             <div className="w-full aspect-square bg-slate-50 border border-slate-100 rounded-3xl overflow-hidden relative shadow-sm">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -527,7 +527,7 @@ export default function ProductDetailPage() {
                 alt={product.name}
                 className="object-cover w-full h-full"
               />
-              
+
               {/* Wishlist Heart Toggle */}
               <button
                 type="button"
@@ -538,8 +538,8 @@ export default function ProductDetailPage() {
               </button>
 
               <span className={`absolute top-4 left-4 text-[9px] px-2.5 py-0.5 rounded font-bold uppercase tracking-wider border bg-white/95
-                ${isProject 
-                  ? 'border-indigo-200 text-indigo-500' 
+                ${isProject
+                  ? 'border-indigo-200 text-indigo-500'
                   : 'border-rose-200 text-primary-pink'}
               `}>
                 {product.item_type}
@@ -554,8 +554,8 @@ export default function ProductDetailPage() {
                     key={img.id}
                     onClick={() => setActiveImage(img.url)}
                     className={`w-16 h-16 bg-white border rounded-2xl overflow-hidden shrink-0 transition-all cursor-pointer p-0.5
-                      ${activeImage === img.url 
-                        ? 'border-primary-pink ring-2 ring-primary-pink-light' 
+                      ${activeImage === img.url
+                        ? 'border-primary-pink ring-2 ring-primary-pink-light'
                         : 'border-slate-100 opacity-70 hover:opacity-100'}`}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -674,11 +674,11 @@ export default function ProductDetailPage() {
 
           {/* RIGHT: Product Options & Purchase Actions (Span 7) */}
           <div className="lg:col-span-7 space-y-6 text-left">
-            
+
             {/* Title, Stars & Description */}
             <div className="space-y-3">
               <h1 className="text-2xl sm:text-4xl font-playfair font-bold text-slate-800 leading-tight">{product.name}</h1>
-              
+
               <div className="flex items-center gap-3.5 text-xs text-slate-500 font-bold flex-wrap">
                 <div className="flex items-center gap-0.5 text-amber-400">
                   {[1, 2, 3, 4, 5].map((s) => (
@@ -703,7 +703,7 @@ export default function ProductDetailPage() {
                 <span className="bg-primary-pink-light border border-rose-200 text-primary-pink text-[10px] font-extrabold px-2.5 py-0.5 rounded-md uppercase tracking-wider animate-pulse">
                   {discountPct}% OFF
                 </span>
-                
+
                 {isProject && (
                   <span className="bg-indigo-50 border border-indigo-100 text-indigo-600 text-[9px] font-bold px-2 py-0.5 rounded">
                     Advance Deposit booking
@@ -741,11 +741,10 @@ export default function ProductDetailPage() {
                               key={opt}
                               type="button"
                               onClick={() => handleAttrSelect(key, opt)}
-                              className={`px-5 py-2.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
-                                isActive
+                              className={`px-5 py-2.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${isActive
                                   ? 'border-primary-pink bg-primary-pink-light text-primary-pink shadow-sm scale-[1.01]'
                                   : 'border-slate-200 hover:border-slate-350 bg-white text-slate-600'
-                              }`}
+                                }`}
                             >
                               {opt}
                             </button>
@@ -790,9 +789,9 @@ export default function ProductDetailPage() {
                 {product.customFields.map((field, index) => {
                   const opts = typeof field.options === 'string' ? JSON.parse(field.options) : field.options;
                   const mime = typeof field.allowed_mime_types === 'string' ? JSON.parse(field.allowed_mime_types) : field.allowed_mime_types;
-                  
+
                   // Special Design overrides for specific field keys to match screenshot
-                  
+
                   // OVERRIDE 1: Choose Shape (Dropdown)
                   if (field.field_key === 'shape' && Array.isArray(opts)) {
                     return (
@@ -809,11 +808,10 @@ export default function ProductDetailPage() {
                                 key={opt}
                                 type="button"
                                 onClick={() => handleCustomFieldChange(field.field_key, opt)}
-                                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
-                                  isActive
+                                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${isActive
                                     ? 'border-primary-pink bg-primary-pink-light text-primary-pink shadow-sm'
                                     : 'border-slate-200 hover:border-slate-350 bg-white text-slate-600'
-                                }`}
+                                  }`}
                               >
                                 {opt === 'Heart' && <HeartIcon className={`w-3.5 h-3.5 ${isActive ? 'fill-primary-pink' : ''}`} />}
                                 {opt === 'Square' && <span className="w-3.5 h-3.5 border-2 border-current rounded-sm block shrink-0" />}
@@ -840,7 +838,7 @@ export default function ProductDetailPage() {
                           {field.required === 1 && <span className="text-primary-pink ml-1">*</span>}
                         </label>
                         <p className="text-[10px] text-slate-400 font-bold -mt-1 leading-none">{field.help_text || 'Best results with high-resolution images.'}</p>
-                        
+
                         <div className="flex flex-wrap items-center gap-3">
                           {/* Upload Slot */}
                           <div className="relative w-28 h-28 border-2 border-dashed border-slate-200 hover:border-primary-pink/50 rounded-2xl flex flex-col items-center justify-center text-center p-2 bg-white hover:bg-rose-50/5 transition-all">
@@ -927,15 +925,13 @@ export default function ProductDetailPage() {
                                 key={opt}
                                 type="button"
                                 onClick={() => handleCustomFieldChange(field.field_key, opt)}
-                                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
-                                  isActive
+                                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${isActive
                                     ? 'border-primary-pink bg-primary-pink-light text-primary-pink shadow-sm'
                                     : 'border-slate-200 hover:border-slate-350 bg-white text-slate-600'
-                                }`}
+                                  }`}
                               >
-                                <span className={`w-3 h-3 rounded-full shrink-0 ${
-                                  opt.toLowerCase().includes('warm') ? 'bg-amber-400' : 'bg-sky-400'
-                                }`} />
+                                <span className={`w-3 h-3 rounded-full shrink-0 ${opt.toLowerCase().includes('warm') ? 'bg-amber-400' : 'bg-sky-400'
+                                  }`} />
                                 <span>{opt}</span>
                               </button>
                             );
@@ -1053,7 +1049,7 @@ export default function ProductDetailPage() {
             <h3 className="text-lg sm:text-xl font-playfair font-bold text-slate-800 text-center">
               You May <span className="text-primary-pink font-playfair italic">Also Like</span>
             </h3>
-            
+
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
               {relatedProducts.map(rel => {
                 const imgUrl = rel.images?.[0]?.url || 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=300&auto=format&fit=crop';
@@ -1129,9 +1125,8 @@ export default function ProductDetailPage() {
                           {[1, 2, 3, 4, 5].map((s) => (
                             <Star
                               key={s}
-                              className={`w-3.5 h-3.5 ${
-                                s <= rev.rating ? 'text-amber-400 fill-amber-400' : 'text-slate-200'
-                              }`}
+                              className={`w-3.5 h-3.5 ${s <= rev.rating ? 'text-amber-400 fill-amber-400' : 'text-slate-200'
+                                }`}
                             />
                           ))}
                         </div>
@@ -1167,9 +1162,8 @@ export default function ProductDetailPage() {
                       className="p-0.5 text-slate-200 hover:text-amber-400 transition-colors cursor-pointer"
                     >
                       <Star
-                        className={`w-7 h-7 ${
-                          star <= reviewForm.rating ? 'text-amber-400 fill-amber-400' : 'text-slate-200'
-                        }`}
+                        className={`w-7 h-7 ${star <= reviewForm.rating ? 'text-amber-400 fill-amber-400' : 'text-slate-200'
+                          }`}
                       />
                     </button>
                   ))}
