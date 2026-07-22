@@ -28,6 +28,17 @@ import {
   CircleDot
 } from 'lucide-react';
 
+const safeParseAttrs = (attr) => {
+  if (!attr) return {};
+  if (typeof attr === 'object') return attr;
+  try {
+    const parsed = JSON.parse(attr);
+    return typeof parsed === 'object' && parsed !== null ? parsed : {};
+  } catch (e) {
+    return {};
+  }
+};
+
 const dummyRatings = {
   1: { count: 42, avg: 4.8 },
   2: { count: 28, avg: 4.7 },
@@ -106,7 +117,7 @@ export default function ProductDetailPage() {
         const firstActive = data.variants.find(v => v.status === 'ACTIVE') || data.variants[0];
         setSelectedVariant(firstActive);
 
-        const attrs = typeof firstActive.attributes === 'string' ? JSON.parse(firstActive.attributes) : firstActive.attributes;
+        const attrs = safeParseAttrs(firstActive.attributes);
         setSelectedAttrs(attrs);
       }
 
@@ -167,9 +178,9 @@ export default function ProductDetailPage() {
 
     const matched = product.variants.find(v => {
       if (v.status !== 'ACTIVE') return false;
-      const vAttrs = typeof v.attributes === 'string' ? JSON.parse(v.attributes) : v.attributes;
+      const vAttrs = safeParseAttrs(v.attributes);
       const keys = Object.keys(updated);
-      return keys.every(k => vAttrs[k] === updated[k]) && Object.keys(vAttrs).length === keys.length;
+      return keys.every(k => String(vAttrs[k]) === String(updated[k])) && Object.keys(vAttrs).length === keys.length;
     });
 
     setSelectedVariant(matched || null);
@@ -457,7 +468,7 @@ export default function ProductDetailPage() {
   if (isVariable && product.variants) {
     product.variants.forEach(v => {
       if (v.status !== 'ACTIVE') return;
-      const vAttrs = typeof v.attributes === 'string' ? JSON.parse(v.attributes) : v.attributes;
+      const vAttrs = safeParseAttrs(v.attributes);
       Object.entries(vAttrs).forEach(([k, val]) => {
         if (!attrKeys.includes(k)) attrKeys.push(k);
         if (!attrOptions[k]) attrOptions[k] = [];
