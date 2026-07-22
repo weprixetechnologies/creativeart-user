@@ -173,8 +173,8 @@ export default function MyOrdersPage() {
             return (
               <div key={stage} className="relative z-10 flex flex-col items-center">
                 <div className={`w-3.5 h-3.5 rounded-full border-2 transition-all ${isCompleted
-                    ? 'bg-[#e04169] border-[#e04169] ring-2 ring-rose-100'
-                    : 'bg-white border-slate-200'
+                  ? 'bg-[#e04169] border-[#e04169] ring-2 ring-rose-100'
+                  : 'bg-white border-slate-200'
                   } ${isActive ? 'scale-110' : ''}`} />
                 <span className={`text-[8px] sm:text-[9px] font-bold uppercase tracking-wider mt-2.5 ${isCompleted ? 'text-slate-800' : 'text-slate-400'}`}>
                   {stage}
@@ -308,8 +308,8 @@ export default function MyOrdersPage() {
             key={filter.key}
             onClick={() => setActiveFilter(filter.key)}
             className={`px-4.5 py-2.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all whitespace-nowrap border cursor-pointer ${activeFilter === filter.key
-                ? 'bg-[#e04169] text-white border-[#e04169] shadow-sm shadow-rose-600/10 scale-[1.01]'
-                : 'bg-white text-slate-500 border-slate-100 hover:border-rose-100 hover:text-[#e04169]'
+              ? 'bg-[#e04169] text-white border-[#e04169] shadow-sm shadow-rose-600/10 scale-[1.01]'
+              : 'bg-white text-slate-500 border-slate-100 hover:border-rose-100 hover:text-[#e04169]'
               }`}
           >
             {filter.label}
@@ -376,8 +376,8 @@ export default function MyOrdersPage() {
                   <div className="space-y-1.5 min-w-0">
                     <div className="flex items-center gap-1.5 flex-wrap">
                       <span className={`text-[8px] font-black px-2 py-0.5 rounded border uppercase tracking-wider leading-none ${isDual
-                          ? 'bg-rose-50 border-rose-100 text-[#e04169]'
-                          : 'bg-slate-50 border-slate-200/60 text-slate-505'
+                        ? 'bg-rose-50 border-rose-100 text-[#e04169]'
+                        : 'bg-slate-50 border-slate-200/60 text-slate-505'
                         }`}>
                         {isDual ? 'Custom Project' : 'Standard'}
                       </span>

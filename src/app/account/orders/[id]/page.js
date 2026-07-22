@@ -234,8 +234,8 @@ export default function UserOrderDetailPage() {
               return (
                 <div key={idx} className="flex-1 flex flex-row sm:flex-col items-center gap-3 text-left sm:text-center">
                   <div className={`w-8 h-8 rounded-full border flex items-center justify-center font-bold text-xs shrink-0 transition-all ${isCompleted
-                      ? 'bg-[#e04169] border-[#e04169] text-white shadow-sm shadow-rose-600/10'
-                      : 'border-slate-200 bg-white text-slate-400'
+                    ? 'bg-[#e04169] border-[#e04169] text-white shadow-sm shadow-rose-600/10'
+                    : 'border-slate-200 bg-white text-slate-400'
                     } ${isActive ? 'animate-pulse ring-2 ring-[#fff0f3]' : ''}`}>
                     {idx + 1}
                   </div>
@@ -395,6 +395,30 @@ export default function UserOrderDetailPage() {
         </div>
       )}
 
+      {/* Manual Shipping Details */}
+      {(order.awbNumber || order.courierName || order.expectedDeliveryDate) && (
+        <div className="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm">
+          <div className="flex items-center gap-2 px-5 py-4 border-b border-slate-100">
+            <Truck className="w-4 h-4 text-[#e04169]" />
+            <h2 className="text-xs font-bold text-slate-850 uppercase tracking-widest">Shipping Details</h2>
+          </div>
+          <div className="p-5 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4">
+              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Courier Name</p>
+              <p className="font-extrabold text-slate-800 text-sm">{order.courierName || '-'}</p>
+            </div>
+            <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4">
+              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Tracking Number / AWB</p>
+              <p className="font-extrabold text-slate-800 text-sm">{order.awbNumber || '-'}</p>
+            </div>
+            <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4">
+              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Expected Delivery</p>
+              <p className="font-extrabold text-slate-800 text-sm">{order.expectedDeliveryDate ? new Date(order.expectedDeliveryDate).toLocaleDateString('en-IN') : '-'}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Pricing */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
@@ -429,8 +453,8 @@ export default function UserOrderDetailPage() {
                 </p>
               </div>
               <span className={`text-[9px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider ${order.payments?.some(p => p.paymentType === 'ADVANCE' && p.status === 'CAPTURED')
-                  ? 'bg-emerald-55/10 text-emerald-600 border border-emerald-100'
-                  : 'bg-yellow-55/10 text-yellow-600 border border-yellow-100'
+                ? 'bg-emerald-55/10 text-emerald-600 border border-emerald-100'
+                : 'bg-yellow-55/10 text-yellow-600 border border-yellow-100'
                 }`}>
                 {order.payments?.some(p => p.paymentType === 'ADVANCE' && p.status === 'CAPTURED') ? 'Paid' : 'Pending'}
               </span>
@@ -445,8 +469,8 @@ export default function UserOrderDetailPage() {
                 </p>
               </div>
               <span className={`text-[9px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider ${order.payments?.some(p => p.paymentType === 'FINAL' && p.status === 'CAPTURED')
-                  ? 'bg-emerald-55/10 text-emerald-600 border border-emerald-100'
-                  : 'bg-yellow-55/10 text-yellow-600 border border-yellow-100'
+                ? 'bg-emerald-55/10 text-emerald-600 border border-emerald-100'
+                : 'bg-yellow-55/10 text-yellow-600 border border-yellow-100'
                 }`}>
                 {order.payments?.some(p => p.paymentType === 'FINAL' && p.status === 'CAPTURED') ? 'Paid' : 'Pending'}
               </span>

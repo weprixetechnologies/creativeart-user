@@ -83,7 +83,7 @@ export default function CategoriesPage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
             {categories.map((cat) => {
-              const catImg = CATEGORY_IMAGES[cat.id] || 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=400&auto=format&fit=crop';
+              const catImg = cat.photo_url || CATEGORY_IMAGES[cat.id] || 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=400&auto=format&fit=crop';
               return (
                 <Link
                   key={cat.id}

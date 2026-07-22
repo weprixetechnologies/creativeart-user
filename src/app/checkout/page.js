@@ -31,6 +31,7 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const [settings, setSettings] = useState(null);
 
   const sessionId = typeof window !== 'undefined' ? localStorage.getItem('sessionId') || '' : '';
 
@@ -65,8 +66,12 @@ export default function CheckoutPage() {
       // 2. Fetch user addresses
       const addressData = await apiClient.get('/addresses');
       
+      // 3. Fetch settings
+      const settingsData = await apiClient.get('/settings').catch(() => ({ data: {} }));
+      
       setCart(cartObj);
       setAddresses(addressData);
+      setSettings(settingsData.data || {});
       const defaultAddr = addressData.find(a => a.isDefault) || addressData[0];
       if (defaultAddr) setSelectedAddress(defaultAddr.id);
     } catch (err) { setError(err.message); }
@@ -312,26 +317,28 @@ export default function CheckoutPage() {
                 </button>
 
                 {/* Cash on Delivery (COD) */}
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod('COD')}
-                  className={`text-left p-4 rounded-2xl border transition-all cursor-pointer ${
-                    paymentMethod === 'COD'
-                      ? 'border-primary-pink bg-primary-pink-light ring-1 ring-primary-pink/25'
-                      : 'border-slate-100 hover:border-rose-100 bg-white'
-                  }`}
-                >
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-lg">💵</span>
-                    {paymentMethod === 'COD' && (
-                      <CheckCircle2 className="w-4 h-4 text-primary-pink ml-auto" />
-                    )}
-                  </div>
-                  <p className="text-xs font-extrabold text-slate-800">Cash on Delivery (COD)</p>
-                  <p className="text-[10px] text-slate-400 font-medium mt-1 leading-relaxed">
-                    Pay with cash directly to the delivery agent upon receiving your package.
-                  </p>
-                </button>
+                {settings?.cod_enabled === true && (
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('COD')}
+                    className={`text-left p-4 rounded-2xl border transition-all cursor-pointer ${
+                      paymentMethod === 'COD'
+                        ? 'border-primary-pink bg-primary-pink-light ring-1 ring-primary-pink/25'
+                        : 'border-slate-100 hover:border-rose-100 bg-white'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-lg">💵</span>
+                      {paymentMethod === 'COD' && (
+                        <CheckCircle2 className="w-4 h-4 text-primary-pink ml-auto" />
+                      )}
+                    </div>
+                    <p className="text-xs font-extrabold text-slate-800">Cash on Delivery (COD)</p>
+                    <p className="text-[10px] text-slate-400 font-medium mt-1 leading-relaxed">
+                      Pay with cash directly to the delivery agent upon receiving your package.
+                    </p>
+                  </button>
+                )}
               </div>
             </section>
 

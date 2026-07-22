@@ -16,13 +16,19 @@ import {
   Truck,
   CreditCard,
   PhoneCall,
-  Check
+  Check,
+  Quote
 } from 'lucide-react';
 
 export default function Home() {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState([]);
+  const [banners, setBanners] = useState([]);
+  const [imagerizedSections, setImagerizedSections] = useState([]);
+  const [googleReviews, setGoogleReviews] = useState({ rating: 0, total: 0, reviews: [] });
+  const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
+  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -44,6 +50,24 @@ export default function Home() {
     fetchHomeData();
   }, []);
 
+  useEffect(() => {
+    if (banners.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentBannerIndex(prev => (prev + 1) % banners.length);
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [banners]);
+
+  useEffect(() => {
+    if (googleReviews.reviews && googleReviews.reviews.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentReviewIndex(prev => (prev + 1) % googleReviews.reviews.length);
+      }, 6000);
+      return () => clearInterval(interval);
+    }
+  }, [googleReviews.reviews]);
+
   const fetchHomeData = async () => {
     setLoading(true);
     setError('');
@@ -51,6 +75,34 @@ export default function Home() {
       // 1. Fetch categories
       const cats = await apiClient.get('/categories');
       setCategories(cats);
+
+      // Fetch banners
+      try {
+        const activeBanners = await apiClient.get('/banners');
+        setBanners(activeBanners.data || activeBanners);
+      } catch (err) {
+        console.error('Failed to load banners', err);
+      }
+
+      // Fetch imagerized sections
+      try {
+        const sectionsRes = await apiClient.get('/imagerized-sections');
+        setImagerizedSections(sectionsRes.data || sectionsRes);
+      } catch (err) {
+        console.error('Failed to load imagerized sections', err);
+      }
+
+      // Fetch google reviews
+      try {
+        const reviewData = await apiClient.get('/reviews/google');
+        setGoogleReviews({
+          rating: reviewData.data?.rating || 0,
+          total: reviewData.data?.user_ratings_total || 0,
+          reviews: reviewData.data?.reviews || []
+        });
+      } catch (err) {
+        console.error('Failed to load google reviews', err);
+      }
 
       // 2. Fetch active products
       const prodsRes = await apiClient.get('/products?limit=8');
@@ -167,68 +219,38 @@ export default function Home() {
       <Header />
 
       {/* Hero Showcase Section */}
-      <section className="relative bg-gradient-to-r from-rose-50/70 via-rose-100/30 to-amber-50/20 px-6 sm:px-12 py-12 lg:py-20 border-b border-rose-100 overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary-pink/5 rounded-full blur-3xl -z-10 animate-pulse" />
-        <div className="absolute -top-12 -left-12 w-48 h-48 bg-amber-200/10 rounded-full blur-2xl -z-10" />
-
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          {/* Left Text */}
-          <div className="lg:col-span-7 space-y-6 text-left">
-            <div className="inline-flex items-center space-x-2 bg-primary-pink-light border border-rose-200 px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold text-primary-pink select-none uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Made with Love ❤️</span>
-            </div>
-
-            <h1 className="text-4xl sm:text-6xl font-playfair font-bold text-slate-800 leading-tight tracking-tight">
-              Thoughtful <span className="text-primary-pink italic font-playfair">Gifts</span> <br />
-              for Every Moment
-            </h1>
-
-            <p className="text-slate-500 text-sm sm:text-base leading-relaxed max-w-xl">
-              Unique, beautiful & meaningful gifts to make them smile. Discover bespoke flower preservations, custom photo lamps, and custom curated hampers.
-            </p>
-
-            <div className="flex flex-row items-center gap-4 pt-2">
-              <Link
-                href="/shop"
-                className="px-6 sm:px-8 py-3.5 bg-primary-pink hover:bg-primary-pink-hover text-white rounded-full font-bold text-xs sm:text-sm transition-all shadow-md shadow-rose-600/10 flex items-center justify-center cursor-pointer"
+      {banners.length > 0 && (
+        <section className="relative w-full overflow-hidden group bg-slate-100 px-[30px] pt-[10px]">
+          <div className="relative w-full rounded-2xl overflow-hidden">
+            {banners.map((banner, index) => (
+              <div
+                key={banner.id}
+                className={`transition-opacity duration-1000 w-full ${index === currentBannerIndex ? 'opacity-100 relative z-10' : 'opacity-0 absolute inset-0 z-0'}`}
               >
-                Shop Now <ArrowRight className="w-4 h-4 ml-2" />
-              </Link>
-              <Link
-                href="/shop"
-                className="px-6 sm:px-8 py-3.5 bg-white border border-rose-200 hover:bg-primary-pink-light text-slate-700 hover:text-primary-pink rounded-full font-bold text-xs sm:text-sm transition-colors text-center"
-              >
-                Explore Categories
-              </Link>
-            </div>
-
-            {/* Micro badges */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 text-[10px] sm:text-xs font-bold text-slate-400">
-              <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-primary-pink" /> Premium Quality</span>
-              <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-primary-pink" /> Secure Packaging</span>
-              <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-primary-pink" /> On-time Delivery</span>
-              <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-primary-pink" /> 100% Trusted</span>
-            </div>
+                {banner.link_url ? (
+                  <Link href={banner.link_url} className="w-full block">
+                    <img src={banner.image_url} alt="Banner" className="w-full h-auto block" />
+                  </Link>
+                ) : (
+                  <img src={banner.image_url} alt="Banner" className="w-full h-auto block" />
+                )}
+              </div>
+            ))}
           </div>
-
-          {/* Right Image */}
-          <div className="lg:col-span-5 relative flex justify-center items-center">
-            <div className="relative w-full max-w-md aspect-[4/3] rounded-3xl overflow-hidden shadow-xl border-4 border-white transform hover:scale-[1.02] transition-transform duration-300">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/hero-gift.jpg"
-                alt="Thoughtful Gifts Showcase"
-                className="object-cover w-full h-full"
-              />
+          {/* Controls */}
+          {banners.length > 1 && (
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex space-x-2">
+              {banners.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentBannerIndex(index)}
+                  className={`w-2.5 h-2.5 rounded-full transition-all ${index === currentBannerIndex ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/80'}`}
+                />
+              ))}
             </div>
-            {/* Soft decorative background circles */}
-            <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-amber-100 rounded-full blur-xl -z-10 animate-bounce" />
-            <div className="absolute -top-4 -right-4 w-32 h-32 bg-rose-200/50 rounded-full blur-2xl -z-10" />
-          </div>
-        </div>
-      </section>
+          )}
+        </section>
+      )}
 
       {/* Floating success notification */}
       {successMsg && (
@@ -265,7 +287,7 @@ export default function Home() {
           ) : (
             <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 pt-1 snap-x scrollbar-thin scrollbar-thumb-rose-200 scrollbar-track-transparent">
               {categories.map((cat) => {
-                const coverImage = categoryImages[cat.slug] || 'https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=200&auto=format&fit=crop';
+                const coverImage = cat.photo_url || categoryImages[cat.slug] || 'https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=200&auto=format&fit=crop';
                 return (
                   <Link
                     key={cat.id}
@@ -291,6 +313,46 @@ export default function Home() {
             </div>
           )}
         </section>
+
+        {/* Dynamic Imagerized Sections */}
+        {imagerizedSections.map((section) => {
+          let parsedImages = [];
+          try {
+             parsedImages = typeof section.images === 'string' ? JSON.parse(section.images) : section.images;
+          } catch(e) {}
+          
+          let gridCols = 'grid-cols-1';
+          if (section.layout === 'layout_2') gridCols = 'grid-cols-1 md:grid-cols-2';
+          if (section.layout === 'layout_3') gridCols = 'grid-cols-1 sm:grid-cols-3';
+          if (section.layout === 'layout_4') gridCols = 'grid-cols-2 md:grid-cols-4';
+
+          return (
+            <section key={section.id} className="space-y-6">
+              {section.title && (
+                <div className="flex justify-between items-end border-b border-rose-100 pb-3">
+                  <div>
+                    <h2 className="text-xl sm:text-2xl font-playfair font-bold text-slate-800">
+                      {section.title}
+                    </h2>
+                  </div>
+                </div>
+              )}
+              <div className={`grid ${gridCols} gap-4 sm:gap-6`}>
+                {parsedImages.map((img, i) => (
+                  <div key={i} className="w-full h-auto rounded-2xl overflow-hidden shadow-sm group border border-slate-100 aspect-[4/3] sm:aspect-auto">
+                    {img.linkUrl ? (
+                      <Link href={img.linkUrl} className="w-full h-full block">
+                        <img src={img.imageUrl} alt={`${section.title || 'Section'} image ${i+1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      </Link>
+                    ) : (
+                      <img src={img.imageUrl} alt={`${section.title || 'Section'} image ${i+1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+          );
+        })}
 
         {/* 2. Best Sellers Grid Section */}
         <section className="space-y-6">
@@ -351,11 +413,20 @@ export default function Home() {
                   ? prod.advance_amount 
                   : prod.base_price;
 
+                let totalStock = 0;
+                if (!isProject && prod.variants && prod.variants.length > 0) {
+                  totalStock = prod.variants.reduce((sum, v) => sum + (parseInt(v.stock_qty) || 0), 0);
+                }
+                const isOutOfStock = !isProject && totalStock <= 0;
+
                 return (
                   <Link
                     key={prod.id}
                     href={`/products/${prod.slug}`}
-                    className="group bg-white border border-slate-100 hover:border-rose-100 rounded-3xl p-3 sm:p-4 flex flex-col justify-between hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 relative cursor-pointer"
+                    className={`group bg-white border border-slate-100 hover:border-rose-100 rounded-3xl p-3 sm:p-4 flex flex-col justify-between hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 relative ${isOutOfStock ? '' : 'cursor-pointer'}`}
+                    onClick={(e) => {
+                      if (isOutOfStock) e.preventDefault();
+                    }}
                   >
                     {/* Image Preview Container */}
                     <div className="w-full aspect-square bg-slate-50 rounded-2xl overflow-hidden relative flex items-center justify-center border border-slate-50">
@@ -363,15 +434,23 @@ export default function Home() {
                       <img
                         src={primaryImage}
                         alt={prod.name}
-                        className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                        className={`object-cover w-full h-full transition-transform duration-300 ${isOutOfStock ? 'grayscale opacity-70' : 'group-hover:scale-105'}`}
                         loading="lazy"
                       />
+                      
+                      {isOutOfStock && (
+                        <div className="absolute inset-0 bg-white/40 backdrop-blur-[2px] flex items-center justify-center z-10">
+                          <span className="bg-slate-800 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg">
+                            Out of Stock
+                          </span>
+                        </div>
+                      )}
                       
                       {/* Wishlist Heart Icon */}
                       <button
                         type="button"
                         onClick={(e) => handleToggleWishlist(prod.id, e)}
-                        className={`absolute top-2.5 right-2.5 p-2 rounded-full shadow-sm hover:scale-110 transition-transform bg-white/90 border border-slate-100 text-slate-400 hover:text-rose-500`}
+                        className={`absolute top-2.5 right-2.5 p-2 rounded-full shadow-sm hover:scale-110 transition-transform bg-white/90 border border-slate-100 text-slate-400 hover:text-rose-500 z-20`}
                       >
                         <Heart className={`w-3.5 h-3.5 ${isWished ? 'text-primary-pink fill-primary-pink' : ''}`} />
                       </button>
@@ -423,9 +502,10 @@ export default function Home() {
                       ) : (
                         <button
                           type="button"
+                          disabled={isOutOfStock}
                           onClick={(e) => handleAddToCart(prod, e)}
-                          className="p-2 bg-primary-pink-light hover:bg-primary-pink text-primary-pink hover:text-white border border-rose-100 rounded-xl transition-all"
-                          title="Add to Cart"
+                          className={`p-2 rounded-xl transition-all border ${isOutOfStock ? 'bg-slate-100 border-slate-200 text-slate-400 cursor-not-allowed' : 'bg-primary-pink-light hover:bg-primary-pink text-primary-pink hover:text-white border-rose-100'}`}
+                          title={isOutOfStock ? "Out of Stock" : "Add to Cart"}
                         >
                           <ShoppingBag className="w-3.5 h-3.5" />
                         </button>
@@ -472,7 +552,74 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 4. Gifts by Occasion Grid */}
+        {/* 4. Google Testimonials Carousel */}
+        {googleReviews.reviews && googleReviews.reviews.length > 0 && (
+          <section className="bg-white border border-rose-100 rounded-3xl p-6 sm:p-10 shadow-sm relative overflow-hidden">
+            {/* Decorative background elements */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-rose-50 rounded-full blur-3xl -z-10 -translate-y-1/2 translate-x-1/3" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-amber-50 rounded-full blur-3xl -z-10 translate-y-1/3 -translate-x-1/4" />
+            
+            <div className="text-center mb-8 space-y-2">
+              <h2 className="text-xl sm:text-2xl font-playfair font-bold text-slate-800">
+                What Our <span className="text-primary-pink font-playfair italic">Customers Say</span>
+              </h2>
+              <div className="flex items-center justify-center gap-2 text-xs font-bold text-slate-500">
+                <span className="flex text-amber-400">
+                  <Star className="w-4 h-4 fill-amber-400" />
+                </span>
+                <span>{googleReviews.rating} on Google</span>
+                <span>({googleReviews.total} reviews)</span>
+              </div>
+            </div>
+
+            <div className="relative w-full overflow-hidden" style={{ minHeight: '220px' }}>
+              {googleReviews.reviews.map((review, index) => (
+                <div
+                  key={index}
+                  className={`absolute top-0 left-0 w-full transition-all duration-700 ease-in-out ${index === currentReviewIndex ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-8 z-0'}`}
+                >
+                  <div className="flex flex-col items-center text-center max-w-2xl mx-auto space-y-4 px-4">
+                    <Quote className="w-8 h-8 text-rose-200" />
+                    <p className="text-sm sm:text-base text-slate-600 italic font-medium leading-relaxed">
+                      "{review.text}"
+                    </p>
+                    <div className="flex flex-col items-center pt-2">
+                      <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-sm mb-2 bg-slate-100">
+                        <img 
+                          src={review.profile_photo_url} 
+                          alt={review.author_name}
+                          className="w-full h-full object-cover"
+                          onError={(e) => { e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(review.author_name)}&background=random`; }}
+                        />
+                      </div>
+                      <h4 className="font-bold text-sm text-slate-800">{review.author_name}</h4>
+                      <div className="flex items-center mt-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className={`w-3 h-3 ${i < review.rating ? 'fill-amber-400 text-amber-400' : 'fill-slate-200 text-slate-200'}`} />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {/* Carousel Dots */}
+            {googleReviews.reviews.length > 1 && (
+              <div className="flex justify-center items-center gap-1.5 mt-6">
+                {googleReviews.reviews.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentReviewIndex(index)}
+                    className={`w-2 h-2 rounded-full transition-all ${index === currentReviewIndex ? 'bg-primary-pink w-6' : 'bg-rose-200 hover:bg-primary-pink-light'}`}
+                  />
+                ))}
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* 5. Gifts by Occasion Grid */}
         <section className="space-y-6">
           <div className="flex justify-between items-end border-b border-rose-100 pb-3">
             <div>
@@ -519,7 +666,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 5. Newsletter Sign Up banner */}
+        {/* 6. Newsletter Sign Up banner */}
         <section className="bg-primary-pink-light/35 border border-rose-100 rounded-3xl p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1.5 text-center md:text-left">
             <h3 className="font-playfair text-lg sm:text-xl font-bold text-slate-800">Never miss an update!</h3>
