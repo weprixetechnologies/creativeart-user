@@ -413,9 +413,15 @@ export default function Home() {
                   ? prod.advance_amount 
                   : prod.base_price;
 
-                let totalStock = 0;
-                if (!isProject && prod.variants && prod.variants.length > 0) {
-                  totalStock = prod.variants.reduce((sum, v) => sum + (parseInt(v.stock_qty) || 0), 0);
+                let totalStock = 9999;
+                if (!isProject) {
+                  if (prod.product_type === 'VARIABLE') {
+                    totalStock = (prod.variants && prod.variants.length > 0)
+                      ? prod.variants.reduce((sum, v) => sum + (parseInt(v.stock_qty) || 0), 0)
+                      : 0;
+                  } else {
+                    totalStock = (prod.stock_qty !== undefined && prod.stock_qty !== null) ? parseInt(prod.stock_qty) : 100;
+                  }
                 }
                 const isOutOfStock = !isProject && totalStock <= 0;
 

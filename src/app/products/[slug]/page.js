@@ -496,8 +496,8 @@ export default function ProductDetailPage() {
 
   const isOutOfStock = !isProject && (
     isVariable
-      ? (selectedVariant && selectedVariant.stock_qty <= 0)
-      : (product?.variants?.[0]?.stock_qty <= 0)
+      ? (!selectedVariant || parseInt(selectedVariant.stock_qty) <= 0)
+      : (product?.stock_qty !== undefined && product?.stock_qty !== null ? parseInt(product.stock_qty) <= 0 : false)
   );
 
   return (
