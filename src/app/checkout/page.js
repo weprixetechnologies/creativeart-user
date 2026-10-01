@@ -446,7 +446,7 @@ export default function CheckoutPage() {
               </button>
 
               <p className="text-center text-[10px] text-slate-400 font-medium leading-relaxed">
-                {paymentMethod === 'COD' ? 'Pay cash upon delivery' : 'Secured by PhonePe'} · Free Standard Shipping · All prices in INR
+                {paymentMethod === 'COD' ? 'Pay cash upon delivery' : 'Secured by PhonePe'} · Affordable Pricing and Creative Work · All prices in INR
               </p>
 
               <Link

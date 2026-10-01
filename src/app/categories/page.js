@@ -128,11 +128,7 @@ export default function CategoriesPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-rose-100 py-10 text-center">
-        <p className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">
-          © 2026 CreativeArt by Tannu. Handcrafted resin decorations & flower preservation.
-        </p>
-      </footer>
+      
     </div>
   );
 }

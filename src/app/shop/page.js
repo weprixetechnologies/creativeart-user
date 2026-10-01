@@ -822,11 +822,7 @@ function ShopContent() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-rose-100 py-10 px-6 sm:px-12 text-center space-y-4 mt-12">
-        <p className="text-[11px] text-slate-400">
-          © 2026 CreativeArt by Tannu. Preservations, resin designs and custom handcrafted gifts. All rights reserved.
-        </p>
-      </footer>
+      
     </div>
   );
 }

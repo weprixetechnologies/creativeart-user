@@ -141,7 +141,7 @@ export default function Header() {
       <div className="bg-primary-pink text-white py-2 px-6 sm:px-12 text-[11px] sm:text-xs font-medium tracking-wide flex justify-between items-center transition-colors">
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-1">
-            <Gift className="w-3.5 h-3.5" /> FREE SHIPPING on orders above ₹999
+            <Gift className="w-3.5 h-3.5" /> AFFORDABLE PRICING AND CREATIVE WORK
           </span>
           <span className="hidden md:inline">|</span>
           <span className="hidden md:inline">COD Available</span>

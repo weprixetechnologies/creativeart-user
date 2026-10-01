@@ -659,7 +659,7 @@ export default function ProductDetailPage() {
                 <Truck className="w-4.5 h-4.5 text-primary-pink" />
                 <span>Delivery by <span className="text-slate-800 font-extrabold">{deliveryDateString}</span></span>
               </div>
-              <span className="text-slate-400 font-medium">Free Shipping on orders above ₹999</span>
+              <span className="text-slate-400 font-medium">Affordable Pricing and Creative Work</span>
             </div>
 
             {/* Variable Product Variant Selector Controls */}
@@ -1044,7 +1044,7 @@ export default function ProductDetailPage() {
                 </button>
                 {accordionOpen.shipping && (
                   <div className="p-4 pt-0 border-t border-slate-50 font-medium text-slate-500 leading-relaxed text-left">
-                    <p>All standard orders are processed and printed within 2-3 business days. Delivery is handled securely via express couriers like Delhivery, BlueDart or Shiprocket partners. Transit time is 3-5 days depending on location. Free shipping unlocks on orders exceeding ₹999.</p>
+                    <p>All standard orders are processed and printed within 2-3 business days. Delivery is handled securely via express couriers like Delhivery, BlueDart or Shiprocket partners. Transit time is 3-5 days depending on location. We offer affordable pricing and creative work.</p>
                   </div>
                 )}
               </div>

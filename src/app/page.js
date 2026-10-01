@@ -531,8 +531,8 @@ export default function Home() {
               <div className="p-3 bg-white rounded-2xl shadow-sm text-primary-pink border border-rose-100">
                 <Truck className="w-5 h-5" />
               </div>
-              <h4 className="font-bold text-xs sm:text-sm text-slate-800">Free Shipping</h4>
-              <p className="text-[10px] sm:text-xs text-slate-500 leading-normal">On orders above ₹999</p>
+              <h4 className="font-bold text-xs sm:text-sm text-slate-800">Affordable Pricing</h4>
+              <p className="text-[10px] sm:text-xs text-slate-500 leading-normal">And Creative Work</p>
             </div>
             <div className="flex flex-col items-center space-y-2">
               <div className="p-3 bg-white rounded-2xl shadow-sm text-primary-pink border border-rose-100">
@@ -704,26 +704,7 @@ export default function Home() {
       </main>
 
       {/* Elegant Footer */}
-      <footer className="bg-white border-t border-rose-100 py-10 px-6 sm:px-12 text-center space-y-4">
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-6 text-xs font-bold text-slate-500 font-sans uppercase tracking-wider">
-          <Link href="/shop" className="hover:text-primary-pink transition-colors">Shop</Link>
-          <span>•</span>
-          <Link href="/about" className="hover:text-primary-pink transition-colors">Our Craft</Link>
-          <span>•</span>
-          <Link href="/help" className="hover:text-primary-pink transition-colors">FAQ & Support</Link>
-          <span>•</span>
-          <Link href="/terms-and-conditions" className="hover:text-primary-pink transition-colors">Terms of Service</Link>
-          <span>•</span>
-          <Link href="/refund-policy" className="hover:text-primary-pink transition-colors">Refund Policy</Link>
-          <span>•</span>
-          <Link href="/privacy-policy" className="hover:text-primary-pink transition-colors">Privacy Policy</Link>
-          <span>•</span>
-          <Link href="/shipping-policy" className="hover:text-primary-pink transition-colors">Shipping Policy</Link>
-        </div>
-        <p className="text-[11px] text-slate-400">
-          © 2026 CreativeArt by Tannu. Preservations, resin designs and custom handcrafted gifts. All rights reserved.
-        </p>
-      </footer>
+      
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import ReferralTracker from "../components/ReferralTracker";
 import LoginModal from "../components/LoginModal";
+import Footer from "../components/Footer";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
         <ReferralTracker />
         {children}
         <LoginModal />
+        <Footer />
       </body>
     </html>
   );

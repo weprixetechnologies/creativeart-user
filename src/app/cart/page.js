@@ -214,11 +214,7 @@ export default function CartPage() {
                       <span className="text-slate-400">Calculated at checkout</span>
                     )}
                   </div>
-                  {subtotal < 999 && (
-                    <p className="text-[10px] text-slate-400 bg-slate-50 border border-slate-100 rounded-xl px-3 py-2">
-                      Add ₹{(999 - subtotal).toLocaleString('en-IN', { minimumFractionDigits: 0 })} more to unlock free shipping
-                    </p>
-                  )}
+                  
                 </div>
 
                 <div className="border-t border-slate-100 pt-4">
@@ -247,11 +243,7 @@ export default function CartPage() {
         )}
       </main>
 
-      <footer className="bg-white border-t border-rose-100 py-8 px-6 text-center mt-12">
-        <p className="text-[11px] text-slate-400">
-          © 2026 CreativeArt by Tannu. All rights reserved.
-        </p>
-      </footer>
+      
     </div>
   );
 }
