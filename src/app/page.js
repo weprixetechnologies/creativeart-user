@@ -712,7 +712,13 @@ export default function Home() {
           <span>•</span>
           <Link href="/help" className="hover:text-primary-pink transition-colors">FAQ & Support</Link>
           <span>•</span>
-          <Link href="/terms" className="hover:text-primary-pink transition-colors">Terms of Service</Link>
+          <Link href="/terms-and-conditions" className="hover:text-primary-pink transition-colors">Terms of Service</Link>
+          <span>•</span>
+          <Link href="/refund-policy" className="hover:text-primary-pink transition-colors">Refund Policy</Link>
+          <span>•</span>
+          <Link href="/privacy-policy" className="hover:text-primary-pink transition-colors">Privacy Policy</Link>
+          <span>•</span>
+          <Link href="/shipping-policy" className="hover:text-primary-pink transition-colors">Shipping Policy</Link>
         </div>
         <p className="text-[11px] text-slate-400">
           © 2026 CreativeArt by Tannu. Preservations, resin designs and custom handcrafted gifts. All rights reserved.
