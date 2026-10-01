@@ -22,7 +22,7 @@ export default function Page() {
       <main className="flex-1 w-full max-w-4xl mx-auto px-4 py-12">
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 md:p-12">
           <h1 className="text-3xl font-playfair font-bold text-slate-800 mb-6">Shipping Policy</h1>
-          <APP_COMPONENT_NAME />
+          <ShippingContent />
         </div>
       </main>
     </div>
